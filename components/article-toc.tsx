@@ -43,7 +43,7 @@ export function ArticleToc({ nodes }: ArticleTocProps) {
       <p className="border-b border-[var(--page-border)] pb-2 text-[13px] font-semibold tracking-wide text-[var(--page-muted)] md:text-sm">
         /CONTENTS
       </p>
-      <div className="mt-5 max-h-[min(70vh,calc(100vh-8rem))] overflow-y-auto pr-1">
+      <div className="mt-5 pr-1">
         <TocBranch nodes={nodes} depth={0} />
       </div>
     </nav>
