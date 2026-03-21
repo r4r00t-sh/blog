@@ -1,0 +1,298 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+:root {
+  --background: #f5f5f7;
+  --foreground: #111113;
+  --muted: #52525b;
+  --border: #d4d4d8;
+  --accent: #6b7cff;
+  /* Fixed floating nav: safe inset + compact pill row + gap before page content */
+  --nav-stack: calc(max(0.375rem, env(safe-area-inset-top, 0px)) + 1.75rem + 0.375rem);
+
+  /* Cream / editorial pages (home, posts) */
+  --page-surface: #f5f4ef;
+  --page-text: #151515;
+  --page-text-strong: #1b1b1b;
+  --page-muted: #5f5b4f;
+  --page-label: #6a6658;
+  --page-border: #d7d3c7;
+  --page-border-soft: #e3dfd2;
+  --page-chip-border: #bcb8ac;
+  --page-chip-text: #3a382f;
+  --page-hover-border: #151515;
+  --page-link-hover: #4f5be5;
+  --page-tagline: #4c4a41;
+  --post-marker: #b9b4a7;
+  --featured-pattern-bg: #f1efe7;
+  --featured-pattern-dot: #d7d3c7;
+  --article-code-bg: #eceae4;
+  --article-code-text: #1a1a1a;
+  --article-pre-border: #e3dfd2;
+}
+
+/*
+ * Gruvbox Light (canonical hex)
+ * bg: #fbf1c7  bg0_h: #f9f5d7  bg0_s: #f2e5bc  bg1: #ebdbb2  bg2: #d5c4a1  bg3: #bdae93  bg4: #a89984
+ * fg: #3c3836  fg0: #282828  fg2: #504945  fg3: #665c54  fg4: #7c6f64
+ * blue: #458588 / bold #076678  gray: #7c6f64 / bold #928374
+ */
+html[data-site-theme="gruvbox-light"] {
+  --background: #fbf1c7; /* bg0 */
+  --foreground: #3c3836; /* fg1 / fg */
+  --muted: #665c54; /* fg3 */
+  --border: #d5c4a1; /* bg2 */
+  --accent: #076678; /* blue bold */
+
+  --page-surface: #fbf1c7; /* bg0 */
+  --page-text: #3c3836; /* fg */
+  --page-text-strong: #282828; /* fg0 */
+  --page-muted: #665c54; /* fg3 */
+  --page-label: #7c6f64; /* fg4 */
+  --page-border: #d5c4a1; /* bg2 */
+  --page-border-soft: #ebdbb2; /* bg1 */
+  --page-chip-border: #bdae93; /* bg3 */
+  --page-chip-text: #504945; /* fg2 */
+  --page-hover-border: #282828; /* fg0 */
+  --page-link-hover: #076678; /* blue bold */
+  --page-tagline: #504945; /* fg2 */
+  --post-marker: #928374; /* gray bold */
+
+  --featured-pattern-bg: #f2e5bc; /* bg0_s */
+  --featured-pattern-dot: #d5c4a1; /* bg2 */
+
+  --article-code-bg: #ebdbb2; /* bg1 — inline code */
+  --article-code-text: #282828; /* fg0 */
+  --article-pre-border: #d5c4a1; /* bg2 */
+}
+
+/*
+ * Gruvbox Dark (canonical hex)
+ * bg/bg0: #282828  bg0_h: #1d2021  bg0_s: #32302f  bg1: #3c3836  bg2: #504945  bg3: #665c54  bg4: #7c6f64
+ * fg: #ebdbb2  fg0: #fbf1c7  fg2: #d5c4a1  fg3: #bdae93  fg4: #a89984
+ * blue bright: #83a598  aqua bright: #8ec07c  orange bright: #fe8019
+ */
+html[data-site-theme="gruvbox-dark"] {
+  --background: #282828; /* bg0 */
+  --foreground: #ebdbb2; /* fg */
+  --muted: #bdae93; /* fg3 */
+  --border: #504945; /* bg2 */
+  --accent: #83a598; /* blue (bright) */
+
+  --page-surface: #282828; /* bg0 */
+  --page-text: #ebdbb2; /* fg */
+  --page-text-strong: #fbf1c7; /* fg0 */
+  --page-muted: #bdae93; /* fg3 */
+  --page-label: #a89984; /* fg4 */
+  --page-border: #504945; /* bg2 */
+  --page-border-soft: #3c3836; /* bg1 */
+  --page-chip-border: #665c54; /* bg3 */
+  --page-chip-text: #d5c4a1; /* fg2 */
+  --page-hover-border: #ebdbb2; /* fg */
+  --page-link-hover: #83a598; /* blue bright */
+  --page-tagline: #d5c4a1; /* fg2 */
+  --post-marker: #928374; /* gray */
+
+  --featured-pattern-bg: #32302f; /* bg0_s */
+  --featured-pattern-dot: #504945; /* bg2 */
+
+  --article-code-bg: #3c3836; /* bg1 */
+  --article-code-text: #ebdbb2; /* fg */
+  --article-pre-border: #504945; /* bg2 */
+}
+
+/* Dark Gruvbox nav pills (readable on charcoal) */
+html[data-site-theme="gruvbox-dark"] .nav-floating-pill {
+  border-color: var(--border);
+  background-color: color-mix(in srgb, var(--background) 78%, #fbf1c7 8%);
+  color: var(--foreground);
+  box-shadow: 0 1px 2px rgba(0, 0, 0, 0.35);
+}
+
+html[data-site-theme="gruvbox-dark"] .nav-floating-pill:hover {
+  border-color: var(--page-chip-border);
+  background-color: color-mix(in srgb, var(--page-border-soft) 55%, var(--background));
+}
+
+html[data-site-theme="gruvbox-dark"] .nav-floating-pill:focus-visible {
+  outline-color: #83a598;
+}
+
+* {
+  box-sizing: border-box;
+}
+
+html,
+body {
+  margin: 0;
+  padding: 0;
+}
+
+a {
+  color: inherit;
+  text-decoration: none;
+}
+
+.markdown-body {
+  color: var(--foreground);
+  line-height: 1.8;
+}
+
+.markdown-body h1,
+.markdown-body h2,
+.markdown-body h3 {
+  margin: 1.5rem 0 0.75rem;
+  font-weight: 700;
+}
+
+.markdown-body p,
+.markdown-body ul,
+.markdown-body ol {
+  margin: 0.75rem 0;
+}
+
+.markdown-body a {
+  color: var(--accent);
+  text-decoration: underline;
+}
+
+.post-marker {
+  position: absolute;
+  width: 12px;
+  height: 12px;
+}
+
+.post-marker::before,
+.post-marker::after {
+  content: "";
+  position: absolute;
+  background: var(--post-marker);
+}
+
+.post-marker::before {
+  left: 50%;
+  top: 0;
+  width: 1px;
+  height: 100%;
+  transform: translateX(-50%);
+}
+
+.post-marker::after {
+  top: 50%;
+  left: 0;
+  width: 100%;
+  height: 1px;
+  transform: translateY(-50%);
+}
+
+.article-content {
+  font-family: var(--font-inter), Inter, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
+  font-size: 1.125rem;
+  line-height: 1.8;
+  color: var(--page-text);
+}
+
+.article-content h1,
+.article-content h2,
+.article-content h3 {
+  margin: 2rem 0 1rem;
+  font-family: var(--font-inter), Inter, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
+  font-size: clamp(2rem, 2.8vw, 2.4rem);
+  font-weight: 800;
+  line-height: 1.15;
+}
+
+.article-content p,
+.article-content ul,
+.article-content ol,
+.article-content blockquote {
+  margin: 1rem 0;
+  font-family: var(--font-inter), Inter, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
+}
+
+.article-content li {
+  font-family: var(--font-inter), Inter, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
+}
+
+.article-content table {
+  width: 100%;
+  border-collapse: collapse;
+  margin: 1.25rem 0;
+  font-size: 0.9375rem;
+  line-height: 1.5;
+}
+
+.article-content th,
+.article-content td {
+  border: 1px solid var(--page-border-soft);
+  padding: 0.55rem 0.75rem;
+  text-align: left;
+  vertical-align: top;
+}
+
+.article-content thead th {
+  background: var(--article-code-bg);
+  font-weight: 700;
+  font-family: var(--font-inter), Inter, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
+  color: var(--page-text);
+}
+
+.article-content tbody td {
+  font-family: var(--font-inter), Inter, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
+}
+
+.article-content pre {
+  overflow-x: auto;
+  padding: 1rem 1.125rem;
+  margin: 1.25rem 0;
+  border-radius: 0.5rem;
+  border: 1px solid var(--article-pre-border);
+  font-family: var(--font-space-mono), ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, monospace;
+  font-size: 0.8125rem;
+  line-height: 1.55;
+  tab-size: 2;
+}
+
+.article-content pre code {
+  font-family: inherit;
+  font-size: inherit;
+  line-height: inherit;
+  background: transparent !important;
+  padding: 0 !important;
+  border-radius: 0 !important;
+}
+
+.article-content :not(pre) > code {
+  background: var(--article-code-bg);
+  padding: 0.12em 0.35em;
+  border-radius: 0.25rem;
+  font-family: var(--font-space-mono), ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, monospace;
+  font-size: 0.88em;
+  color: var(--article-code-text);
+}
+
+.article-content [data-rehype-pretty-code-figure] {
+  margin: 1.25rem 0;
+}
+
+.article-content [data-rehype-pretty-code-figure] pre {
+  margin: 0;
+}
+
+/* SSR uses github-light; until client Shiki sets data-shiki-client, match page palette (no white slab). */
+html[data-site-theme="gruvbox-dark"] .article-content [data-rehype-pretty-code-figure]:not([data-shiki-client]) pre {
+  background-color: #282828 !important;
+  color: #ebdbb2 !important;
+}
+
+html[data-site-theme="gruvbox-light"] .article-content [data-rehype-pretty-code-figure]:not([data-shiki-client]) pre {
+  background-color: #f9f5d7 !important;
+  color: #3c3836 !important;
+}
+
+.featured-pattern {
+  background-color: var(--featured-pattern-bg);
+  background-image: radial-gradient(var(--featured-pattern-dot) 1px, transparent 1px);
+  background-size: 12px 12px;
+}
