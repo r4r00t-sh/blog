@@ -32,8 +32,6 @@ export default function Home() {
         </h1>
         <div className="hero-tagline mt-6 max-w-[600px] space-y-2 text-[18px] leading-relaxed text-[var(--page-tagline)] md:text-[20px]">
           <p>Spellbook for system internals, malware research, and kernel sorcery.</p>
-          <p>Not a tutorial blog. Not a product blog.</p>
-          <p>Just the dark arts, documented.</p>
         </div>
         <div className="flex gap-4 text-xs">
           <Link
