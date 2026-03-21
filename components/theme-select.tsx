@@ -9,7 +9,7 @@ import {
 } from "@/lib/site-theme";
 
 const triggerClass =
-  "nav-floating-pill inline-flex h-7 shrink-0 items-center justify-center gap-1 rounded border border-black/[0.08] bg-white/50 px-2 text-[10px] font-semibold uppercase leading-none tracking-wide text-black shadow-sm backdrop-blur-md backdrop-saturate-150 transition-[background-color,border-color,color] duration-200 hover:bg-white/75 hover:border-black/12 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-[#6b7cff] dark:border-black/[0.1] dark:bg-white/55 dark:text-black dark:shadow-sm dark:hover:border-black/15 dark:hover:bg-white/80";
+  "nav-floating-pill inline-flex h-7 shrink-0 items-center justify-center gap-1 rounded border border-black/[0.08] bg-white/50 px-2 text-[10px] font-semibold uppercase leading-none tracking-wide text-black shadow-sm backdrop-blur-md backdrop-saturate-150 transition-[background-color,border-color,color] duration-200 hover:bg-white/75 hover:border-black/12 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-[color:var(--accent)] dark:border-black/[0.1] dark:bg-white/55 dark:text-black dark:shadow-sm dark:hover:border-black/15 dark:hover:bg-white/80";
 
 const menuBaseClass =
   "absolute top-[calc(100%+4px)] z-[100] min-w-[11rem] rounded border border-border bg-background/95 py-1 text-[10px] font-semibold uppercase leading-none tracking-wide text-foreground shadow-md backdrop-blur-md";

@@ -1,4 +1,3 @@
-import Link from "next/link";
 import { Inter } from "next/font/google";
 import { FeaturedPostCard } from "@/components/featured-post-card";
 import { HomeAnimations } from "@/components/home-animations";
@@ -10,42 +9,48 @@ const inter = Inter({
   variable: "--font-home-inter",
 });
 
+const HERO_TAGLINE = "Spellbook for system internals, malware research, and kernel sorcery.";
+
 export default function Home() {
   const posts = getSortedPostsData();
   const [featuredPost, ...remainingPosts] = posts;
 
   return (
-    <section className={`${inter.variable} bg-[var(--page-surface)] py-12 text-[var(--page-text)]`}>
+    <section className={`${inter.variable} bg-[var(--page-surface)] py-8 text-[var(--page-text)] md:py-10`}>
       <HomeAnimations />
-      <div className="relative pb-16">
-        <span className="post-marker hero-marker left-[8%] top-4" aria-hidden="true" />
-        <span className="post-marker hero-marker right-[10%] top-10" aria-hidden="true" />
-        <span className="post-marker hero-marker left-[22%] top-[52%]" aria-hidden="true" />
-        <span className="post-marker hero-marker right-[35%] bottom-8" aria-hidden="true" />
+      <div className="relative pb-8 md:pb-10">
+        <span className="post-marker hero-marker left-4 top-4" aria-hidden="true" />
+        <span className="post-marker hero-marker right-4 top-4" aria-hidden="true" />
+        <span className="post-marker hero-marker bottom-4 left-4" aria-hidden="true" />
+        <span className="post-marker hero-marker bottom-4 right-4" aria-hidden="true" />
 
-        <h1 className="font-sans text-[72px] font-black uppercase leading-[0.9] tracking-tight md:text-[96px] xl:text-[118px]">
-          {"R4R00T".split(" ").map((word, index) => (
-            <span key={`${word}-${index}`} className="hero-title-word mr-4 inline-block">
-              {word}
-            </span>
-          ))}
-        </h1>
-        <div className="hero-tagline mt-6 max-w-[600px] space-y-2 text-[18px] leading-relaxed text-[var(--page-tagline)] md:text-[20px]">
-          <p>Spellbook for system internals, malware research, and kernel sorcery.</p>
-        </div>
-        <div className="flex gap-4 text-xs">
-          <Link
-            href="/blog"
-            className="text-[var(--page-muted)] transition-colors hover:text-[var(--page-link-hover)] hover:underline"
-          >
-            /Latest Posts
-          </Link>
-          <Link
-            href="/about"
-            className="text-[var(--page-muted)] transition-colors hover:text-[var(--page-link-hover)] hover:underline"
-          >
-            /About
-          </Link>
+        <div className="pt-7 pb-4 md:pt-11 md:pb-6">
+          <div className="flex flex-col gap-4 md:flex-row md:items-center md:gap-10 lg:gap-14 xl:gap-16">
+            <h1 className="flex shrink-0 flex-wrap items-baseline gap-x-3 font-sans font-black uppercase leading-[0.85] tracking-tight [font-size:clamp(3.75rem,14vw,10.5rem)]">
+              {"R4R00T".split(" ").map((word, index) => (
+                <span key={`${word}-${index}`} className="hero-title-word inline-block">
+                  {word}
+                </span>
+              ))}
+            </h1>
+            <div
+              className="h-px w-full max-w-[14rem] bg-[var(--page-border)] md:hidden"
+              aria-hidden="true"
+            />
+            <div
+              className="hidden w-px shrink-0 self-stretch bg-[var(--page-border)] md:block md:min-h-[6rem]"
+              aria-hidden="true"
+            />
+            <div className="hero-tagline min-w-0 max-w-2xl shrink text-[clamp(1.25rem,2.8vw,2.125rem)] leading-snug text-[var(--page-tagline)] md:leading-relaxed lg:max-w-3xl lg:text-[clamp(1.35rem,3vw,2.375rem)]">
+              <p className="m-0 flex flex-wrap items-baseline gap-x-[0.4em] gap-y-1">
+                {HERO_TAGLINE.split(/\s+/).map((word, i) => (
+                  <span key={`${word}-${i}`} className="hero-tagline-word inline-block">
+                    {word}
+                  </span>
+                ))}
+              </p>
+            </div>
+          </div>
         </div>
       </div>
 

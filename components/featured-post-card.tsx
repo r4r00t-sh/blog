@@ -18,7 +18,7 @@ export function FeaturedPostCard({ post }: FeaturedPostCardProps) {
         <h2 className="text-3xl font-extrabold leading-tight">
           <Link
             href={`/blog/${post.slug}`}
-            className="hover:text-[var(--page-link-hover)] hover:underline"
+            className="text-inherit focus-visible:rounded-sm focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-[var(--accent)]"
           >
             {post.title}
           </Link>

@@ -5,7 +5,9 @@ import Link from "next/link";
 import { Inter } from "next/font/google";
 import { getAnime } from "@/lib/anime";
 import { useArticleSyntaxHighlight } from "@/hooks/use-article-syntax-highlight";
+import type { TocNode } from "@/lib/markdown-toc";
 import { formatDate, type PostMeta } from "@/lib/post-types";
+import { ArticleToc } from "@/components/article-toc";
 
 type PostPageContentProps = {
   slug: string;
@@ -15,6 +17,7 @@ type PostPageContentProps = {
   readingTime: string;
   topic: string;
   contentHtml: string;
+  toc: TocNode[];
   otherPostsInTopic: PostMeta[];
 };
 
@@ -31,6 +34,7 @@ export function PostPageContent({
   readingTime,
   topic,
   contentHtml,
+  toc,
   otherPostsInTopic,
 }: PostPageContentProps) {
   const encodedTitle = encodeURIComponent(title);
@@ -144,7 +148,7 @@ export function PostPageContent({
         </h1>
       </section>
 
-      <section className="grid grid-cols-1 gap-10 py-12 lg:grid-cols-[minmax(300px,360px)_minmax(0,1fr)]">
+      <section className="grid grid-cols-1 gap-10 py-12 lg:grid-cols-[minmax(280px,320px)_minmax(0,1fr)]">
         <aside className="lg:sticky lg:top-[var(--nav-stack)] lg:h-fit lg:self-start">
           <div
             className={`overflow-hidden transition-[max-height,opacity] duration-300 ease-in-out ${
@@ -225,15 +229,23 @@ export function PostPageContent({
           </div>
         </aside>
 
-        <div>
-          <p className="border-b border-[var(--page-border)] pb-2 text-xs tracking-wide text-[var(--page-muted)]">
-            /ARTICLE
-          </p>
-          <div
-            ref={articleRef}
-            className="article-content mt-6 max-w-5xl"
-            dangerouslySetInnerHTML={{ __html: contentHtml }}
-          />
+        <div className="grid min-w-0 grid-cols-1 gap-10 lg:grid-cols-[minmax(0,1fr)_minmax(200px,260px)] lg:gap-8 xl:grid-cols-[minmax(0,1fr)_minmax(220px,300px)]">
+          <div className="min-w-0">
+            <p className="border-b border-[var(--page-border)] pb-2 text-xs tracking-wide text-[var(--page-muted)]">
+              /ARTICLE
+            </p>
+            <div
+              ref={articleRef}
+              className="article-content mt-6 max-w-5xl"
+              dangerouslySetInnerHTML={{ __html: contentHtml }}
+            />
+          </div>
+
+          {toc.length > 0 ? (
+            <aside className="lg:sticky lg:top-[var(--nav-stack)] lg:h-fit lg:self-start">
+              <ArticleToc nodes={toc} />
+            </aside>
+          ) : null}
         </div>
       </section>
     </article>

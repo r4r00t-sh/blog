@@ -15,7 +15,7 @@ export function HomeAnimations() {
       }
 
       anime.set(".hero-title-word", { opacity: [0, 1], translateY: 40 });
-      anime.set(".hero-tagline", { opacity: [0, 1], translateY: 20 });
+      anime.set(".hero-tagline-word", { opacity: 0, translateY: 14, translateX: 10 });
       anime.set(".hero-marker", { opacity: [0, 1], scale: 0, transformOrigin: "center center" });
 
       anime.animate(".hero-title-word", {
@@ -26,11 +26,12 @@ export function HomeAnimations() {
         ease: "outExpo",
       });
 
-      anime.animate(".hero-tagline", {
+      anime.animate(".hero-tagline-word", {
         opacity: [0, 1],
-        translateY: [20, 0],
-        delay: 550,
-        duration: 600,
+        translateY: [14, 0],
+        translateX: [10, 0],
+        delay: anime.stagger(72, { start: 520 }),
+        duration: 820,
         ease: "outExpo",
       });
 

@@ -6,7 +6,9 @@ import remarkGfm from "remark-gfm";
 import remarkRehype from "remark-rehype";
 import rehypePrettyCode from "rehype-pretty-code";
 import type { Options as PrettyCodeOptions } from "rehype-pretty-code";
+import rehypeSlug from "rehype-slug";
 import rehypeStringify from "rehype-stringify";
+import { extractTocFromMarkdown, type TocNode } from "@/lib/markdown-toc";
 import type { SiteUiThemeId } from "@/lib/site-theme";
 import { PostMeta } from "@/lib/post-types";
 
@@ -27,6 +29,7 @@ function shikiThemeForSiteUi(siteUi: SiteUiThemeId | undefined): PrettyCodeShiki
 export type Post = PostMeta & {
   contentHtml: string;
   readingTime: string;
+  toc: TocNode[];
 };
 
 function parseDateValue(date: string): number {
@@ -85,9 +88,12 @@ export async function getPostData(slug: string, siteUiTheme?: SiteUiThemeId): Pr
     bypassInlineCode: true,
   } satisfies PrettyCodeOptions;
 
+  const toc = extractTocFromMarkdown(content);
+
   const processedContent = await remark()
     .use(remarkGfm)
     .use(remarkRehype)
+    .use(rehypeSlug)
     .use(rehypePrettyCode, prettyCodeOptions)
     .use(rehypeStringify)
     .process(content);
@@ -102,5 +108,6 @@ export async function getPostData(slug: string, siteUiTheme?: SiteUiThemeId): Pr
     summary: String(data.summary),
     contentHtml,
     readingTime: calculateReadingTime(content),
+    toc,
   };
 }

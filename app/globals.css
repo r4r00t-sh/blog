@@ -7,7 +7,7 @@
   --foreground: #111113;
   --muted: #52525b;
   --border: #d4d4d8;
-  --accent: #6b7cff;
+  --accent: #00ffec;
   /* Fixed floating nav: safe inset + compact pill row + gap before page content */
   --nav-stack: calc(max(0.375rem, env(safe-area-inset-top, 0px)) + 1.75rem + 0.375rem);
 
@@ -22,14 +22,24 @@
   --page-chip-border: #bcb8ac;
   --page-chip-text: #3a382f;
   --page-hover-border: #151515;
-  --page-link-hover: #4f5be5;
+  --page-link-hover: #ff00ce;
   --page-tagline: #4c4a41;
-  --post-marker: #b9b4a7;
+  --post-marker: #00ff2b;
   --featured-pattern-bg: #f1efe7;
   --featured-pattern-dot: #d7d3c7;
   --article-code-bg: #eceae4;
   --article-code-text: #1a1a1a;
   --article-pre-border: #e3dfd2;
+
+  --page-row-hover-bg: color-mix(
+    in srgb,
+    #00ffec 32%,
+    color-mix(
+      in srgb,
+      #ff00ce 14%,
+      color-mix(in srgb, #00ff2b 12%, color-mix(in srgb, #fff400 12%, var(--page-surface)))
+    )
+  );
 }
 
 /*
@@ -43,7 +53,7 @@ html[data-site-theme="gruvbox-light"] {
   --foreground: #3c3836; /* fg1 / fg */
   --muted: #665c54; /* fg3 */
   --border: #d5c4a1; /* bg2 */
-  --accent: #076678; /* blue bold */
+  --accent: #00ffec;
 
   --page-surface: #fbf1c7; /* bg0 */
   --page-text: #3c3836; /* fg */
@@ -55,9 +65,9 @@ html[data-site-theme="gruvbox-light"] {
   --page-chip-border: #bdae93; /* bg3 */
   --page-chip-text: #504945; /* fg2 */
   --page-hover-border: #282828; /* fg0 */
-  --page-link-hover: #076678; /* blue bold */
+  --page-link-hover: #ff00ce;
   --page-tagline: #504945; /* fg2 */
-  --post-marker: #928374; /* gray bold */
+  --post-marker: #fff400;
 
   --featured-pattern-bg: #f2e5bc; /* bg0_s */
   --featured-pattern-dot: #d5c4a1; /* bg2 */
@@ -65,6 +75,16 @@ html[data-site-theme="gruvbox-light"] {
   --article-code-bg: #ebdbb2; /* bg1 — inline code */
   --article-code-text: #282828; /* fg0 */
   --article-pre-border: #d5c4a1; /* bg2 */
+
+  --page-row-hover-bg: color-mix(
+    in srgb,
+    #00ffec 26%,
+    color-mix(
+      in srgb,
+      #fff400 32%,
+      color-mix(in srgb, #00ff2b 18%, color-mix(in srgb, #ff00ce 10%, var(--page-surface)))
+    )
+  );
 }
 
 /*
@@ -78,7 +98,7 @@ html[data-site-theme="gruvbox-dark"] {
   --foreground: #ebdbb2; /* fg */
   --muted: #bdae93; /* fg3 */
   --border: #504945; /* bg2 */
-  --accent: #83a598; /* blue (bright) */
+  --accent: #00ff2b;
 
   --page-surface: #282828; /* bg0 */
   --page-text: #ebdbb2; /* fg */
@@ -90,9 +110,9 @@ html[data-site-theme="gruvbox-dark"] {
   --page-chip-border: #665c54; /* bg3 */
   --page-chip-text: #d5c4a1; /* fg2 */
   --page-hover-border: #ebdbb2; /* fg */
-  --page-link-hover: #83a598; /* blue bright */
+  --page-link-hover: #ff00ce;
   --page-tagline: #d5c4a1; /* fg2 */
-  --post-marker: #928374; /* gray */
+  --post-marker: #fff400;
 
   --featured-pattern-bg: #32302f; /* bg0_s */
   --featured-pattern-dot: #504945; /* bg2 */
@@ -100,6 +120,16 @@ html[data-site-theme="gruvbox-dark"] {
   --article-code-bg: #3c3836; /* bg1 */
   --article-code-text: #ebdbb2; /* fg */
   --article-pre-border: #504945; /* bg2 */
+
+  --page-row-hover-bg: color-mix(
+    in srgb,
+    #00ff2b 22%,
+    color-mix(
+      in srgb,
+      #00ffec 20%,
+      color-mix(in srgb, #ff00ce 16%, color-mix(in srgb, #fff400 12%, var(--page-border-soft)))
+    )
+  );
 }
 
 /* Dark Gruvbox nav pills (readable on charcoal) */
@@ -116,7 +146,7 @@ html[data-site-theme="gruvbox-dark"] .nav-floating-pill:hover {
 }
 
 html[data-site-theme="gruvbox-dark"] .nav-floating-pill:focus-visible {
-  outline-color: #83a598;
+  outline-color: var(--accent);
 }
 
 * {
@@ -201,6 +231,14 @@ a {
   font-size: clamp(2rem, 2.8vw, 2.4rem);
   font-weight: 800;
   line-height: 1.15;
+}
+
+.article-content h2,
+.article-content h3,
+.article-content h4,
+.article-content h5,
+.article-content h6 {
+  scroll-margin-top: calc(var(--nav-stack) + 0.75rem);
 }
 
 .article-content p,

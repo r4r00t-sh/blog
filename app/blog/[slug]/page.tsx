@@ -46,6 +46,7 @@ export default async function PostPage({ params }: PostPageParams) {
       readingTime={post.readingTime}
       topic={post.topic}
       contentHtml={post.contentHtml}
+      toc={post.toc}
       otherPostsInTopic={otherPostsInTopic}
     />
   );
