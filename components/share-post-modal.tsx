@@ -152,7 +152,10 @@ export function SharePostModal({ isOpen, onClose, title, shareUrl, slug }: Share
   }
 
   return (
-    <div className="fixed inset-0 z-[200] flex items-center justify-center p-4" role="presentation">
+    <div
+      className="fixed inset-0 z-[200] flex items-center justify-center p-3 pb-[max(0.75rem,env(safe-area-inset-bottom))] pt-[max(0.75rem,env(safe-area-inset-top))] sm:p-4 sm:pb-4 sm:pt-4"
+      role="presentation"
+    >
       <button
         type="button"
         className="absolute inset-0 bg-black/55 backdrop-blur-[2px]"
@@ -163,7 +166,7 @@ export function SharePostModal({ isOpen, onClose, title, shareUrl, slug }: Share
         role="dialog"
         aria-modal="true"
         aria-labelledby={titleId}
-        className="relative z-[201] w-full max-w-lg border border-[var(--page-border)] bg-[var(--page-surface)] shadow-lg"
+        className="relative z-[201] mx-auto w-full max-w-lg border border-[var(--page-border)] bg-[var(--page-surface)] shadow-lg"
       >
         <div className="flex items-center justify-between border-b border-[var(--page-border)] px-4 py-3">
           <h2 id={titleId} className="text-sm font-semibold uppercase tracking-wide text-[var(--page-text-strong)]">
@@ -179,7 +182,7 @@ export function SharePostModal({ isOpen, onClose, title, shareUrl, slug }: Share
           </button>
         </div>
 
-        <div className="max-h-[min(78vh,640px)] overflow-y-auto p-4">
+        <div className="max-h-[min(78dvh,640px)] overflow-y-auto p-3 sm:max-h-[min(78vh,640px)] sm:p-4">
           <div className="overflow-hidden border border-[var(--page-border-soft)] bg-[var(--article-code-bg)]">
             {/* eslint-disable-next-line @next/next/no-img-element -- dynamic OG route; no build-time src */}
             <img src={ogImageUrl} alt="" className="h-auto w-full object-cover" width={1200} height={630} />

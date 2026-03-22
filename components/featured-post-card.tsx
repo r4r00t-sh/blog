@@ -14,8 +14,8 @@ export function FeaturedPostCard({ post }: FeaturedPostCardProps) {
       <div className="featured-pattern relative min-h-[220px] border-b border-[color:var(--page-border)] md:border-b-0 md:border-r md:border-[color:var(--page-border)]">
         <p className="absolute left-4 top-4 text-xs text-[var(--page-label)]">[ Fig. 1 ]</p>
       </div>
-      <div className="space-y-4 px-6 py-6 text-[var(--page-text-strong)]">
-        <h2 className="text-3xl font-extrabold leading-tight">
+      <div className="space-y-4 px-4 py-5 text-[var(--page-text-strong)] sm:px-6 sm:py-6">
+        <h2 className="text-2xl font-extrabold leading-tight sm:text-3xl">
           <Link
             href={`/blog/${post.slug}`}
             className="text-inherit focus-visible:rounded-sm focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-[var(--accent)]"

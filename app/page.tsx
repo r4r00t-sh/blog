@@ -19,10 +19,10 @@ export default function Home() {
     <section className={`${inter.variable} bg-[var(--page-surface)] py-8 text-[var(--page-text)] md:py-10`}>
       <HomeAnimations />
       <div className="relative pb-8 md:pb-10">
-        <span className="post-marker hero-marker left-4 top-4" aria-hidden="true" />
-        <span className="post-marker hero-marker right-4 top-4" aria-hidden="true" />
-        <span className="post-marker hero-marker bottom-4 left-4" aria-hidden="true" />
-        <span className="post-marker hero-marker bottom-4 right-4" aria-hidden="true" />
+        <span className="post-marker hero-marker left-2 top-3 sm:left-4 sm:top-4" aria-hidden="true" />
+        <span className="post-marker hero-marker right-2 top-3 sm:right-4 sm:top-4" aria-hidden="true" />
+        <span className="post-marker hero-marker bottom-3 left-2 sm:bottom-4 sm:left-4" aria-hidden="true" />
+        <span className="post-marker hero-marker bottom-3 right-2 sm:bottom-4 sm:right-4" aria-hidden="true" />
 
         <div className="pt-7 pb-4 md:pt-11 md:pb-6">
           <div className="flex flex-col gap-4 md:flex-row md:items-center md:gap-10 lg:gap-14 xl:gap-16">

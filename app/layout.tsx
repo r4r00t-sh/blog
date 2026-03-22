@@ -1,4 +1,4 @@
-import type { Metadata } from "next";
+import type { Metadata, Viewport } from "next";
 import { Space_Mono } from "next/font/google";
 import { NavBar } from "@/components/nav-bar";
 import { getSiteUrl } from "@/lib/site-url";
@@ -9,6 +9,12 @@ const spaceMono = Space_Mono({
   variable: "--font-space-mono",
   subsets: ["latin"],
 });
+
+export const viewport: Viewport = {
+  width: "device-width",
+  initialScale: 1,
+  viewportFit: "cover",
+};
 
 export async function generateMetadata(): Promise<Metadata> {
   const siteUrl = getSiteUrl();
@@ -52,7 +58,9 @@ export default function RootLayout({
           }}
         />
         <NavBar />
-        <main className="w-full px-16 pt-[var(--nav-stack)]">{children}</main>
+        <main className="mx-auto w-full max-w-[100vw] px-4 pt-[var(--nav-stack)] sm:px-6 md:px-10 lg:px-16">
+          {children}
+        </main>
       </body>
     </html>
   );

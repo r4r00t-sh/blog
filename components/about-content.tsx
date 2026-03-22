@@ -46,7 +46,7 @@ export function AboutContent() {
     <section className="space-y-5">
       <p className="about-animate text-xs text-muted">/Info</p>
       <h1 className="about-animate text-2xl uppercase">About</h1>
-      <div className="about-animate space-y-4 border border-border p-5 text-sm leading-relaxed text-muted">
+      <div className="about-animate space-y-4 border border-border p-4 text-sm leading-relaxed text-muted sm:p-5">
         <p className="text-foreground">
           I&apos;m a cybersecurity researcher and malware developer — conjuring exploits from thin air and
           bending Windows internals to my will since before most people knew what a syscall was.

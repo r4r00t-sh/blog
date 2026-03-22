@@ -1,6 +1,14 @@
 import type { TocNode } from "@/lib/markdown-toc";
 
-function TocBranch({ nodes, depth }: { nodes: TocNode[]; depth: number }) {
+function TocBranch({
+  nodes,
+  depth,
+  onItemClick,
+}: {
+  nodes: TocNode[];
+  depth: number;
+  onItemClick?: () => void;
+}) {
   if (nodes.length === 0) {
     return null;
   }
@@ -18,11 +26,14 @@ function TocBranch({ nodes, depth }: { nodes: TocNode[]; depth: number }) {
         <li key={node.id} className="relative">
           <a
             href={`#${node.id}`}
+            onClick={onItemClick}
             className="block font-sans text-[13px] font-medium leading-snug tracking-wide text-[var(--page-muted)] transition-colors hover:text-[var(--page-link-hover)] md:text-sm"
           >
             {node.text}
           </a>
-          {node.children.length > 0 ? <TocBranch nodes={node.children} depth={depth + 1} /> : null}
+          {node.children.length > 0 ? (
+            <TocBranch nodes={node.children} depth={depth + 1} onItemClick={onItemClick} />
+          ) : null}
         </li>
       ))}
     </ul>
@@ -31,9 +42,11 @@ function TocBranch({ nodes, depth }: { nodes: TocNode[]; depth: number }) {
 
 type ArticleTocProps = {
   nodes: TocNode[];
+  /** e.g. close mobile drawer after choosing a section */
+  onItemClick?: () => void;
 };
 
-export function ArticleToc({ nodes }: ArticleTocProps) {
+export function ArticleToc({ nodes, onItemClick }: ArticleTocProps) {
   if (nodes.length === 0) {
     return null;
   }
@@ -44,7 +57,7 @@ export function ArticleToc({ nodes }: ArticleTocProps) {
         /CONTENTS
       </p>
       <div className="mt-5 pr-1">
-        <TocBranch nodes={nodes} depth={0} />
+        <TocBranch nodes={nodes} depth={0} onItemClick={onItemClick} />
       </div>
     </nav>
   );
