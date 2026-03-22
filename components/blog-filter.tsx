@@ -92,28 +92,30 @@ export function BlogFilter({ posts }: BlogFilterProps) {
         })}
       </div>
       <div>
-        <div className="grid grid-cols-[130px_1fr_120px] border-b border-border px-4 py-2 text-xs uppercase text-muted">
-          <span>Date</span>
-          <span>Title</span>
-          <span>Topic</span>
-        </div>
-        <ul>
-          {filteredPosts.map((post) => (
-            <li
-              key={post.slug}
-              className="blog-index-row grid grid-cols-[130px_1fr_120px] border-b border-border px-4 py-3 text-sm transition-colors last:border-b-0 hover:bg-[var(--page-row-hover-bg)]"
-            >
-              <span className="text-muted">{formatDate(post.date)}</span>
-              <Link
-                href={`/blog/${post.slug}`}
-                className="text-[var(--page-text-strong)] focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-[var(--accent)]"
+        <div className="overflow-x-auto">
+          <div className="grid min-w-[min(100%,520px)] grid-cols-[7.5rem_minmax(0,1fr)_11.5rem] border-b border-border px-4 py-2 text-xs uppercase text-muted md:grid-cols-[8rem_minmax(0,1fr)_12rem]">
+            <span>Date</span>
+            <span>Title</span>
+            <span>Topic</span>
+          </div>
+          <ul>
+            {filteredPosts.map((post) => (
+              <li
+                key={post.slug}
+                className="blog-index-row grid min-w-[min(100%,520px)] grid-cols-[7.5rem_minmax(0,1fr)_11.5rem] border-b border-border px-4 py-3 text-sm transition-colors last:border-b-0 hover:bg-[var(--page-row-hover-bg)] md:grid-cols-[8rem_minmax(0,1fr)_12rem]"
               >
-                {post.title}
-              </Link>
-              <span className="text-muted">{post.topic}</span>
-            </li>
-          ))}
-        </ul>
+                <span className="text-muted">{formatDate(post.date)}</span>
+                <Link
+                  href={`/blog/${post.slug}`}
+                  className="min-w-0 text-[var(--page-text-strong)] focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-[var(--accent)]"
+                >
+                  {post.title}
+                </Link>
+                <span className="whitespace-nowrap text-muted">{post.topic}</span>
+              </li>
+            ))}
+          </ul>
+        </div>
       </div>
     </div>
   );
