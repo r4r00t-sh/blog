@@ -3,6 +3,9 @@
   "version": "0.1.0",
   "private": true,
   "scripts": {
+    "posts:meta": "node scripts/write-posts-meta.mjs",
+    "predev": "node scripts/write-posts-meta.mjs",
+    "prebuild": "node scripts/write-posts-meta.mjs",
     "dev": "next dev",
     "build": "next build",
     "start": "next start",

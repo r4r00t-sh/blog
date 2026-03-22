@@ -1,6 +1,7 @@
 import type { Metadata } from "next";
 import { Space_Mono } from "next/font/google";
 import { NavBar } from "@/components/nav-bar";
+import { getSiteUrl } from "@/lib/site-url";
 import "./globals.css";
 
 const spaceMono = Space_Mono({
@@ -9,9 +10,31 @@ const spaceMono = Space_Mono({
   subsets: ["latin"],
 });
 
+const siteUrl = getSiteUrl();
+
 export const metadata: Metadata = {
-  title: "r4r00t blog",
-  description: "Personal blog powered by markdown and Next.js 14",
+  metadataBase: new URL(siteUrl),
+  title: {
+    default: "r4r00t blog",
+    template: "%s",
+  },
+  description:
+    "Personal blog on system internals, malware research, and kernel work — markdown, Next.js, and a terminal aesthetic.",
+  openGraph: {
+    type: "website",
+    locale: "en_US",
+    url: "/",
+    siteName: "R4R00T",
+    title: "r4r00t blog",
+    description:
+      "Personal blog on system internals, malware research, and kernel work — markdown, Next.js, and a terminal aesthetic.",
+  },
+  twitter: {
+    card: "summary_large_image",
+    title: "r4r00t blog",
+    description:
+      "Personal blog on system internals, malware research, and kernel work — markdown, Next.js, and a terminal aesthetic.",
+  },
 };
 
 export default function RootLayout({

@@ -8,6 +8,7 @@ import { useArticleSyntaxHighlight } from "@/hooks/use-article-syntax-highlight"
 import type { TocNode } from "@/lib/markdown-toc";
 import { formatDate, type PostMeta } from "@/lib/post-types";
 import { ArticleToc } from "@/components/article-toc";
+import { CopyPostUrlButton, SharePostModal, SharePostTrigger } from "@/components/share-post-modal";
 
 type PostPageContentProps = {
   slug: string;
@@ -19,6 +20,7 @@ type PostPageContentProps = {
   contentHtml: string;
   toc: TocNode[];
   otherPostsInTopic: PostMeta[];
+  shareUrl: string;
 };
 
 const inter = Inter({
@@ -36,11 +38,12 @@ export function PostPageContent({
   contentHtml,
   toc,
   otherPostsInTopic,
+  shareUrl,
 }: PostPageContentProps) {
-  const encodedTitle = encodeURIComponent(title);
   /** Split on whitespace only — inter-word gaps come from flex `gap`, not text nodes, so a line never starts with a “space box”. */
   const titleWords = useMemo(() => title.trim().split(/\s+/).filter(Boolean), [title]);
   const [heroVisible, setHeroVisible] = useState(true);
+  const [shareOpen, setShareOpen] = useState(false);
   const articleRef = useArticleSyntaxHighlight(`${slug}:${contentHtml.length}`);
 
   useEffect(() => {
@@ -206,26 +209,19 @@ export function PostPageContent({
             </div>
           ) : null}
 
-          <div className="mt-8">
-            <p className="mb-2 text-xs text-[var(--page-label)]">SHARE:</p>
-            <div className="flex gap-2">
-              <a
-                href={`https://twitter.com/intent/tweet?text=${encodedTitle}`}
-                target="_blank"
-                rel="noreferrer"
-                className="border border-[var(--page-chip-border)] px-3 py-1 text-xs hover:border-[var(--page-hover-border)]"
-              >
-                Twitter/X
-              </a>
-              <a
-                href="https://www.linkedin.com/"
-                target="_blank"
-                rel="noreferrer"
-                className="border border-[var(--page-chip-border)] px-3 py-1 text-xs hover:border-[var(--page-hover-border)]"
-              >
-                LinkedIn
-              </a>
+          <div className="mt-8 flex flex-wrap items-center gap-2">
+            <p className="shrink-0 text-xs leading-none text-[var(--page-label)]">SHARE:</p>
+            <div className="flex items-center gap-0.5">
+              <SharePostTrigger expanded={shareOpen} onClick={() => setShareOpen(true)} />
+              <CopyPostUrlButton url={shareUrl} />
             </div>
+            <SharePostModal
+              isOpen={shareOpen}
+              onClose={() => setShareOpen(false)}
+              title={title}
+              shareUrl={shareUrl}
+              slug={slug}
+            />
           </div>
         </aside>
 
