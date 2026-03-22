@@ -10,32 +10,33 @@ const spaceMono = Space_Mono({
   subsets: ["latin"],
 });
 
-const siteUrl = getSiteUrl();
-
-export const metadata: Metadata = {
-  metadataBase: new URL(siteUrl),
-  title: {
-    default: "r4r00t blog",
-    template: "%s",
-  },
-  description:
-    "Personal blog on system internals, malware research, and kernel work — markdown, Next.js, and a terminal aesthetic.",
-  openGraph: {
-    type: "website",
-    locale: "en_US",
-    url: "/",
-    siteName: "R4R00T",
-    title: "r4r00t blog",
-    description:
-      "Personal blog on system internals, malware research, and kernel work — markdown, Next.js, and a terminal aesthetic.",
-  },
-  twitter: {
-    card: "summary_large_image",
-    title: "r4r00t blog",
-    description:
-      "Personal blog on system internals, malware research, and kernel work — markdown, Next.js, and a terminal aesthetic.",
-  },
-};
+export async function generateMetadata(): Promise<Metadata> {
+  const siteUrl = getSiteUrl();
+  const description =
+    "Personal blog on system internals, malware research, and kernel work — markdown, Next.js, and a terminal aesthetic.";
+  return {
+    metadataBase: new URL(siteUrl),
+    title: {
+      default: "r4r00t blog",
+      template: "%s",
+    },
+    description,
+    openGraph: {
+      type: "website",
+      locale: "en_US",
+      url: "/",
+      siteName: "R4R00T",
+      title: "r4r00t blog",
+      description,
+      images: [{ url: "/opengraph-image", width: 1200, height: 630, alt: "R4R00T" }],
+    },
+    twitter: {
+      card: "summary_large_image",
+      title: "r4r00t blog",
+      description,
+    },
+  };
+}
 
 export default function RootLayout({
   children,

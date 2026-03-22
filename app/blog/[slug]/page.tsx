@@ -31,7 +31,10 @@ export function generateMetadata({ params }: PostPageParams): Metadata {
     publishedTime = parsed.toISOString();
   }
 
+  const base = getSiteUrl();
+
   return {
+    metadataBase: new URL(base),
     title: `${post.title} | r4r00t blog`,
     description: post.summary,
     authors: [{ name: post.author }],
@@ -43,6 +46,14 @@ export function generateMetadata({ params }: PostPageParams): Metadata {
       description: post.summary,
       ...(publishedTime ? { publishedTime } : {}),
       authors: [post.author],
+      images: [
+        {
+          url: `${path}/opengraph-image`,
+          width: 1200,
+          height: 630,
+          alt: "Post preview",
+        },
+      ],
     },
     twitter: {
       card: "summary_large_image",
