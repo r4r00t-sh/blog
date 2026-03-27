@@ -6,9 +6,13 @@ import { Inter } from "next/font/google";
 import { getAnime } from "@/lib/anime";
 import { useArticleSyntaxHighlight } from "@/hooks/use-article-syntax-highlight";
 import type { TocNode } from "@/lib/markdown-toc";
-import { formatDate, type PostMeta } from "@/lib/post-types";
+import { formatDate, type PostMeta, type Difficulty } from "@/lib/post-types";
 import { ArticleToc } from "@/components/article-toc";
 import { CopyPostUrlButton, SharePostModal, SharePostTrigger } from "@/components/share-post-modal";
+import { ReadingProgress } from "@/components/reading-progress";
+import { useCodeCopyButtons } from "@/components/code-copy-button";
+import { SearchDialog } from "@/components/search-dialog";
+import { KeyboardShortcuts } from "@/components/keyboard-shortcuts";
 
 type PostPageContentProps = {
   slug: string;
@@ -17,10 +21,15 @@ type PostPageContentProps = {
   author: string;
   readingTime: string;
   topic: string;
+  difficulty?: Difficulty;
   contentHtml: string;
   toc: TocNode[];
   otherPostsInTopic: PostMeta[];
   shareUrl: string;
+  series?: string;
+  seriesPart?: number;
+  seriesPosts?: PostMeta[];
+  allPosts?: PostMeta[];
 };
 
 const inter = Inter({
@@ -31,6 +40,29 @@ const inter = Inter({
 const fabTabClass =
   "touch-manipulation border border-[var(--page-border)] bg-[var(--page-surface)] text-[var(--page-label)] shadow-lg backdrop-blur-sm transition-[color,background-color,box-shadow] hover:text-[var(--page-text-strong)] focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-[var(--accent)]";
 
+const difficultyColors: Record<Difficulty, string> = {
+  Beginner: "border-green-500/50 text-green-700",
+  Intermediate: "border-yellow-500/50 text-yellow-700",
+  Advanced: "border-red-500/50 text-red-600",
+};
+
+const difficultyColorsDark: Record<Difficulty, string> = {
+  Beginner: "border-green-400/40 text-green-400",
+  Intermediate: "border-yellow-400/40 text-yellow-400",
+  Advanced: "border-red-400/40 text-red-400",
+};
+
+function DifficultyBadge({ difficulty }: { difficulty: Difficulty }) {
+  return (
+    <span
+      className={`difficulty-badge inline-block border px-2 py-0.5 text-xs ${difficultyColors[difficulty]}`}
+      data-difficulty-dark={difficultyColorsDark[difficulty]}
+    >
+      {difficulty}
+    </span>
+  );
+}
+
 function PostMetadataBlock({
   heroVisible,
   title,
@@ -38,11 +70,15 @@ function PostMetadataBlock({
   author,
   readingTime,
   topic,
+  difficulty,
   otherPostsInTopic,
   shareUrl,
   shareOpen,
   setShareOpen,
   header,
+  series,
+  seriesPart,
+  seriesPosts,
 }: {
   heroVisible: boolean;
   title: string;
@@ -50,11 +86,15 @@ function PostMetadataBlock({
   author: string;
   readingTime: string;
   topic: string;
+  difficulty?: Difficulty;
   otherPostsInTopic: PostMeta[];
   shareUrl: string;
   shareOpen: boolean;
   setShareOpen: (open: boolean) => void;
   header?: ReactNode;
+  series?: string;
+  seriesPart?: number;
+  seriesPosts?: PostMeta[];
 }) {
   return (
     <>
@@ -95,7 +135,51 @@ function PostMetadataBlock({
             </span>
           </dd>
         </div>
+        {difficulty ? (
+          <div className="metadata-row flex items-start justify-between gap-4 border-b border-[var(--page-border-soft)] pb-2">
+            <dt className="text-[var(--page-label)]">LEVEL:</dt>
+            <dd>
+              <DifficultyBadge difficulty={difficulty} />
+            </dd>
+          </div>
+        ) : null}
       </dl>
+
+      {/* Series navigation */}
+      {series && seriesPosts && seriesPosts.length > 1 ? (
+        <div className="mt-8">
+          <p className="border-b border-[var(--page-border)] pb-2 text-xs tracking-wide text-[var(--page-muted)]">
+            /SERIES: {series.toUpperCase()}
+          </p>
+          <ul className="mt-4 space-y-3 text-sm">
+            {seriesPosts.map((sp, idx) => {
+              const isCurrent = sp.slug === title.toLowerCase().replace(/\s+/g, "-") || sp.seriesPart === seriesPart;
+              return (
+                <li
+                  key={sp.slug}
+                  className={`border-b border-[var(--page-border-soft)] pb-3 last:border-b-0 last:pb-0 ${
+                    isCurrent ? "opacity-60" : ""
+                  }`}
+                >
+                  <span className="text-[10px] text-[var(--page-label)]">Part {sp.seriesPart ?? idx + 1}</span>
+                  {isCurrent ? (
+                    <p className="font-sans font-semibold leading-snug text-[var(--page-text)]">
+                      {sp.title}
+                    </p>
+                  ) : (
+                    <Link
+                      href={`/blog/${sp.slug}`}
+                      className="block font-sans font-semibold leading-snug text-[var(--page-text)] hover:text-[var(--page-link-hover)]"
+                    >
+                      {sp.title}
+                    </Link>
+                  )}
+                </li>
+              );
+            })}
+          </ul>
+        </div>
+      ) : null}
 
       {otherPostsInTopic.length > 0 ? (
         <div className="mt-8">
@@ -139,19 +223,27 @@ export function PostPageContent({
   author,
   readingTime,
   topic,
+  difficulty,
   contentHtml,
   toc,
   otherPostsInTopic,
   shareUrl,
+  series,
+  seriesPart,
+  seriesPosts,
+  allPosts,
 }: PostPageContentProps) {
   const titleWords = useMemo(() => title.trim().split(/\s+/).filter(Boolean), [title]);
   const [heroVisible, setHeroVisible] = useState(true);
   const [shareOpen, setShareOpen] = useState(false);
   const [mobileMetaOpen, setMobileMetaOpen] = useState(false);
   const [mobileTocOpen, setMobileTocOpen] = useState(false);
+  const [searchOpen, setSearchOpen] = useState(false);
   const articleRef = useArticleSyntaxHighlight(`${slug}:${contentHtml.length}`);
+  useCodeCopyButtons(`${slug}:${contentHtml.length}`);
 
   const anyMobileDrawer = mobileMetaOpen || mobileTocOpen;
+  const postSlugs = useMemo(() => (allPosts ?? []).map((p) => p.slug), [allPosts]);
 
   useEffect(() => {
     const mq = window.matchMedia("(min-width: 1024px)");
@@ -270,6 +362,25 @@ export function PostPageContent({
     return () => observer.disconnect();
   }, []);
 
+  // Anchor links on headings
+  useEffect(() => {
+    const headings = document.querySelectorAll(".article-content h2[id], .article-content h3[id], .article-content h4[id], .article-content h5[id], .article-content h6[id]");
+    const links: HTMLAnchorElement[] = [];
+    headings.forEach((heading) => {
+      if (heading.querySelector(".heading-anchor")) return;
+      const anchor = document.createElement("a");
+      anchor.href = `#${heading.id}`;
+      anchor.className = "heading-anchor";
+      anchor.setAttribute("aria-label", `Link to ${heading.textContent}`);
+      anchor.textContent = "#";
+      heading.appendChild(anchor);
+      links.push(anchor);
+    });
+    return () => {
+      links.forEach((a) => a.remove());
+    };
+  }, [contentHtml]);
+
   const openMeta = () => {
     setMobileTocOpen(false);
     setMobileMetaOpen(true);
@@ -287,19 +398,37 @@ export function PostPageContent({
     author,
     readingTime,
     topic,
+    difficulty,
     otherPostsInTopic,
     shareUrl,
     shareOpen,
     setShareOpen,
+    series,
+    seriesPart,
+    seriesPosts,
   };
 
   return (
     <article className={`${inter.variable} bg-[var(--page-surface)] text-[var(--page-text)]`}>
+      <ReadingProgress />
+      <KeyboardShortcuts onSearchOpen={() => setSearchOpen(true)} postSlugs={postSlugs} />
+
       <section className="relative py-8 sm:py-12 md:py-16">
         <span className="post-marker left-2 top-3 sm:left-4 sm:top-4" aria-hidden="true" />
         <span className="post-marker right-2 top-3 sm:right-4 sm:top-4" aria-hidden="true" />
         <span className="post-marker bottom-3 left-2 sm:bottom-4 sm:left-4" aria-hidden="true" />
         <span className="post-marker bottom-3 right-2 sm:bottom-4 sm:right-4" aria-hidden="true" />
+
+        {/* Difficulty + Series badges above title */}
+        <div className="mb-4 flex flex-wrap items-center gap-2">
+          {difficulty ? <DifficultyBadge difficulty={difficulty} /> : null}
+          {series ? (
+            <span className="inline-block border border-[var(--page-chip-border)] px-2 py-0.5 text-xs text-[var(--page-label)]">
+              {series}{seriesPart ? ` — Part ${seriesPart}` : ""}
+            </span>
+          ) : null}
+        </div>
+
         <h1
           id="hero-title"
           className="flex flex-wrap items-baseline justify-start gap-x-[0.22em] gap-y-1 text-left text-[clamp(2rem,9vw,3.75rem)] font-black uppercase leading-[0.95] tracking-tight sm:text-5xl md:text-6xl md:gap-y-0 lg:text-8xl xl:text-[92px]"
@@ -348,6 +477,8 @@ export function PostPageContent({
         shareUrl={shareUrl}
         slug={slug}
       />
+
+      <SearchDialog posts={allPosts ?? []} isOpen={searchOpen} onClose={() => setSearchOpen(false)} />
 
       {/* Mobile / tablet: floating edge tabs + slide-over panels (< lg) */}
       <div className="lg:hidden">

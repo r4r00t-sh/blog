@@ -352,6 +352,116 @@ html[data-site-theme="gruvbox-light"] .article-content [data-rehype-pretty-code-
   color: #3c3836 !important;
 }
 
+/* ── Theme switch cross-fade transition ── */
+html {
+  transition: background-color 0.3s ease, color 0.25s ease;
+}
+
+html *,
+html *::before,
+html *::after {
+  transition: background-color 0.3s ease, color 0.25s ease, border-color 0.3s ease;
+}
+
+/* Exclude elements where transitions cause issues */
+html .article-content pre,
+html .article-content pre *,
+html .reading-progress-fill {
+  transition: none !important;
+}
+
+/* ── Reading progress bar ── */
+.reading-progress-bar {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  height: 2px;
+  z-index: 100;
+  background: transparent;
+}
+
+.reading-progress-fill {
+  height: 100%;
+  background: var(--accent);
+  will-change: width;
+}
+
+/* ── Code block copy button ── */
+.code-block-wrapper {
+  position: relative;
+}
+
+.code-copy-btn {
+  position: absolute;
+  top: 0.5rem;
+  right: 0.5rem;
+  z-index: 10;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 32px;
+  height: 32px;
+  border-radius: 0.375rem;
+  border: 1px solid var(--page-border-soft);
+  background: var(--page-surface);
+  color: var(--page-muted);
+  cursor: pointer;
+  opacity: 0;
+  transition: opacity 0.2s, color 0.2s, border-color 0.2s, transform 0.15s;
+}
+
+.code-block-wrapper:hover .code-copy-btn,
+.code-copy-btn:focus-visible {
+  opacity: 1;
+}
+
+.code-copy-btn:hover {
+  color: var(--page-text-strong);
+  border-color: var(--page-hover-border);
+}
+
+.code-copy-btn:active {
+  transform: scale(0.92);
+}
+
+.code-copy-btn.copied {
+  opacity: 1;
+  color: var(--accent);
+  border-color: var(--accent);
+  animation: copy-flash 0.3s ease;
+}
+
+@keyframes copy-flash {
+  0% { transform: scale(1); }
+  50% { transform: scale(1.15); }
+  100% { transform: scale(1); }
+}
+
+/* ── Heading anchor links ── */
+.heading-anchor {
+  margin-left: 0.5em;
+  color: var(--page-muted);
+  opacity: 0;
+  font-weight: 400;
+  font-size: 0.7em;
+  text-decoration: none;
+  transition: opacity 0.2s, color 0.2s;
+}
+
+.article-content h2:hover .heading-anchor,
+.article-content h3:hover .heading-anchor,
+.article-content h4:hover .heading-anchor,
+.article-content h5:hover .heading-anchor,
+.article-content h6:hover .heading-anchor,
+.heading-anchor:focus-visible {
+  opacity: 1;
+}
+
+.heading-anchor:hover {
+  color: var(--accent);
+}
+
 .featured-pattern {
   background-color: var(--featured-pattern-bg);
   background-image: radial-gradient(var(--featured-pattern-dot) 1px, transparent 1px);

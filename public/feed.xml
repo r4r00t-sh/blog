@@ -1,0 +1,51 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>r4r00t blog</title>
+    <link>http://localhost:3000</link>
+    <description>System internals, malware research, and kernel work.</description>
+    <language>en-us</language>
+    <lastBuildDate>Fri, 27 Mar 2026 19:11:41 GMT</lastBuildDate>
+    <atom:link href="http://localhost:3000/feed.xml" rel="self" type="application/rss+xml" />
+    <item>
+      <title>Poisoning the Pool: A Deep Dive Into Heap Exploitation</title>
+      <link>http://localhost:3000/blog/poisoning-the-pool-deep-dive-into-heap-exploitation</link>
+      <guid isPermaLink="true">http://localhost:3000/blog/poisoning-the-pool-deep-dive-into-heap-exploitation</guid>
+      <description>glibc heap internals, tcache poisoning, House of Botcake, Safe-Linking bypass, and the evolution of heap exploitation from glibc 2.26 to 2.35.</description>
+      <category>Binary Exploitation</category>
+      <pubDate>Tue, 24 Mar 2026 00:00:00 GMT</pubDate>
+    </item>
+    <item>
+      <title>Reversing Black Basta: Inside One of the Most Capable Ransomware Families</title>
+      <link>http://localhost:3000/blog/reversing-black-basta-inside-one-of-the-most-capable-ransomware-families</link>
+      <guid isPermaLink="true">http://localhost:3000/blog/reversing-black-basta-inside-one-of-the-most-capable-ransomware-families</guid>
+      <description>A technical deep-dive into Black Basta&apos;s binary — encryption scheme, anti-analysis tricks, safe mode abuse, and the crypto flaw that got it cracked.</description>
+      <category>Malware Analysis</category>
+      <pubDate>Sun, 22 Mar 2026 00:00:00 GMT</pubDate>
+    </item>
+    <item>
+      <title>Reading Malware: A Beginner&apos;s Guide to Win32 API Analysis</title>
+      <link>http://localhost:3000/blog/reading-malware-beginners-guide-to-win32-api-analysis</link>
+      <guid isPermaLink="true">http://localhost:3000/blog/reading-malware-beginners-guide-to-win32-api-analysis</guid>
+      <description>How to read a malware sample&apos;s Win32 API calls to understand what it&apos;s doing — for analysts just getting started.</description>
+      <category>Security</category>
+      <pubDate>Sat, 21 Mar 2026 00:00:00 GMT</pubDate>
+    </item>
+    <item>
+      <title>Ring 0 or Die: LKMs, Rootkits,  &amp; Kernel Domination</title>
+      <link>http://localhost:3000/blog/ring-0-or-die-lkms-rootkits-and-kernel-domination</link>
+      <guid isPermaLink="true">http://localhost:3000/blog/ring-0-or-die-lkms-rootkits-and-kernel-domination</guid>
+      <description>How Linux kernel modules are loaded, how kernel rootkits abuse that path, and what defenders can monitor.</description>
+      <category>Security</category>
+      <pubDate>Sat, 21 Mar 2026 00:00:00 GMT</pubDate>
+    </item>
+    <item>
+      <title>Waking the Dead: Windows Process Injection Explained</title>
+      <link>http://localhost:3000/blog/waking-the-dead-windows-process-injection-explained</link>
+      <guid isPermaLink="true">http://localhost:3000/blog/waking-the-dead-windows-process-injection-explained</guid>
+      <description>How Windows process injection techniques work, why they&apos;re effective, and what defenders monitor to catch them.</description>
+      <category>Security</category>
+      <pubDate>Sat, 21 Mar 2026 00:00:00 GMT</pubDate>
+    </item>
+  </channel>
+</rss>

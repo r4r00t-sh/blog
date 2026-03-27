@@ -4,8 +4,8 @@
   "private": true,
   "scripts": {
     "posts:meta": "node scripts/write-posts-meta.mjs",
-    "predev": "node scripts/write-posts-meta.mjs",
-    "prebuild": "node scripts/write-posts-meta.mjs",
+    "predev": "node scripts/write-posts-meta.mjs && node scripts/generate-rss.mjs",
+    "prebuild": "node scripts/write-posts-meta.mjs && node scripts/generate-rss.mjs",
     "dev": "next dev",
     "build": "next build",
     "start": "next start",
@@ -13,6 +13,7 @@
   },
   "dependencies": {
     "animejs": "^4.3.6",
+    "fuse.js": "^7.1.0",
     "github-slugger": "^2.0.0",
     "gray-matter": "^4.0.3",
     "mdast-util-to-string": "^4.0.0",

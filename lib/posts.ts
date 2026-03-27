@@ -10,7 +10,7 @@ import rehypeSlug from "rehype-slug";
 import rehypeStringify from "rehype-stringify";
 import { extractTocFromMarkdown, type TocNode } from "@/lib/markdown-toc";
 import type { SiteUiThemeId } from "@/lib/site-theme";
-import { PostMeta } from "@/lib/post-types";
+import { PostMeta, type Difficulty } from "@/lib/post-types";
 
 const postsDirectory = path.join(process.cwd(), "content/posts");
 
@@ -64,7 +64,7 @@ export function getSortedPostsData(): PostMeta[] {
     const fileContents = fs.readFileSync(fullPath, "utf8");
     const { data } = matter(fileContents);
 
-    return {
+    const meta: PostMeta = {
       slug,
       title: String(data.title),
       date: String(data.date),
@@ -72,9 +72,28 @@ export function getSortedPostsData(): PostMeta[] {
       topic: String(data.topic),
       summary: String(data.summary),
     };
+
+    if (data.difficulty) {
+      meta.difficulty = String(data.difficulty) as Difficulty;
+    }
+    if (data.series) {
+      meta.series = String(data.series);
+      if (data.seriesPart != null) {
+        meta.seriesPart = Number(data.seriesPart);
+      }
+    }
+
+    return meta;
   });
 
   return posts.sort((a, b) => parseDateValue(b.date) - parseDateValue(a.date));
+}
+
+/** All posts in the same series, sorted by seriesPart. */
+export function getSeriesPosts(seriesName: string): PostMeta[] {
+  return getSortedPostsData()
+    .filter((p) => p.series === seriesName)
+    .sort((a, b) => (a.seriesPart ?? 0) - (b.seriesPart ?? 0));
 }
 
 export async function getPostData(slug: string, siteUiTheme?: SiteUiThemeId): Promise<Post> {
@@ -99,7 +118,7 @@ export async function getPostData(slug: string, siteUiTheme?: SiteUiThemeId): Pr
     .process(content);
   const contentHtml = processedContent.toString();
 
-  return {
+  const post: Post = {
     slug,
     title: String(data.title),
     date: String(data.date),
@@ -110,4 +129,16 @@ export async function getPostData(slug: string, siteUiTheme?: SiteUiThemeId): Pr
     readingTime: calculateReadingTime(content),
     toc,
   };
+
+  if (data.difficulty) {
+    post.difficulty = String(data.difficulty) as Difficulty;
+  }
+  if (data.series) {
+    post.series = String(data.series);
+    if (data.seriesPart != null) {
+      post.seriesPart = Number(data.seriesPart);
+    }
+  }
+
+  return post;
 }

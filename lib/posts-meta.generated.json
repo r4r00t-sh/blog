@@ -1,5 +1,12 @@
 [
   {
+    "slug": "poisoning-the-pool-deep-dive-into-heap-exploitation",
+    "title": "Poisoning the Pool: A Deep Dive Into Heap Exploitation",
+    "date": "2026-03-24",
+    "author": "r4r00t",
+    "summary": "glibc heap internals, tcache poisoning, House of Botcake, Safe-Linking bypass, and the evolution of heap exploitation from glibc 2.26 to 2.35."
+  },
+  {
     "slug": "reversing-black-basta-inside-one-of-the-most-capable-ransomware-families",
     "title": "Reversing Black Basta: Inside One of the Most Capable Ransomware Families",
     "date": "2026-03-22",

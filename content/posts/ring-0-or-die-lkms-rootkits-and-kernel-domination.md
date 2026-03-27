@@ -3,6 +3,7 @@ title: "Ring 0 or Die: LKMs, Rootkits,  & Kernel Domination"
 date: "2026-03-21"
 author: "r4r00t"
 topic: "Security"
+difficulty: "Advanced"
 summary: "How Linux kernel modules are loaded, how kernel rootkits abuse that path, and what defenders can monitor."
 ---
 
