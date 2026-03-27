@@ -1,6 +1,7 @@
 import { Inter } from "next/font/google";
 import { FeaturedPostCard } from "@/components/featured-post-card";
 import { HomeAnimations } from "@/components/home-animations";
+import { HomeClient } from "@/components/home-client";
 import { PostTable } from "@/components/post-table";
 import { getSortedPostsData } from "@/lib/posts";
 
@@ -18,6 +19,7 @@ export default function Home() {
   return (
     <section className={`${inter.variable} bg-[var(--page-surface)] py-8 text-[var(--page-text)] md:py-10`}>
       <HomeAnimations />
+      <HomeClient posts={posts} />
       <div className="relative pb-8 md:pb-10">
         <span className="post-marker hero-marker left-2 top-3 sm:left-4 sm:top-4" aria-hidden="true" />
         <span className="post-marker hero-marker right-2 top-3 sm:right-4 sm:top-4" aria-hidden="true" />

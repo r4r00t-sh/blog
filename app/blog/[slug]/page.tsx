@@ -2,7 +2,7 @@ import type { Metadata } from "next";
 import { cookies } from "next/headers";
 import { notFound } from "next/navigation";
 import { PostPageContent } from "@/components/post-page-content";
-import { getOtherPostsInTopic, getPostData, getPostSlugs, getSortedPostsData } from "@/lib/posts";
+import { getOtherPostsInTopic, getPostData, getPostSlugs, getSeriesPosts, getSortedPostsData } from "@/lib/posts";
 import { getSiteUrl } from "@/lib/site-url";
 import { parseSiteUiThemeFromCookie, SITE_UI_THEME_STORAGE_KEY } from "@/lib/site-theme";
 
@@ -73,6 +73,8 @@ export default async function PostPage({ params }: PostPageParams) {
   const post = await getPostData(slug, cookieTheme);
   const otherPostsInTopic = getOtherPostsInTopic(slug, post.topic, 3);
   const shareUrl = `${getSiteUrl()}/blog/${slug}`;
+  const seriesPosts = post.series ? getSeriesPosts(post.series) : [];
+  const allPosts = getSortedPostsData();
 
   return (
     <PostPageContent
@@ -82,10 +84,15 @@ export default async function PostPage({ params }: PostPageParams) {
       author={post.author}
       readingTime={post.readingTime}
       topic={post.topic}
+      difficulty={post.difficulty}
       contentHtml={post.contentHtml}
       toc={post.toc}
       otherPostsInTopic={otherPostsInTopic}
       shareUrl={shareUrl}
+      series={post.series}
+      seriesPart={post.seriesPart}
+      seriesPosts={seriesPosts}
+      allPosts={allPosts}
     />
   );
 }

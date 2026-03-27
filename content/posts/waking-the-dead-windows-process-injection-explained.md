@@ -3,6 +3,7 @@ title: "Waking the Dead: Windows Process Injection Explained"
 date: "2026-03-21"
 author: "r4r00t"
 topic: "Security"
+difficulty: "Intermediate"
 summary: "How Windows process injection techniques work, why they're effective, and what defenders monitor to catch them."
 ---
 

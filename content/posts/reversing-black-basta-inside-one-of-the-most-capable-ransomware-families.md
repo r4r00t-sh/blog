@@ -3,6 +3,7 @@ title: "Reversing Black Basta: Inside One of the Most Capable Ransomware Familie
 date: "2026-03-22"
 author: "r4r00t"
 topic: "Malware Analysis"
+difficulty: "Advanced"
 summary: "A technical deep-dive into Black Basta's binary — encryption scheme, anti-analysis tricks, safe mode abuse, and the crypto flaw that got it cracked."
 ---
 

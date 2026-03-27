@@ -51,6 +51,9 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="en" className={`${spaceMono.variable} h-full`} suppressHydrationWarning>
+      <head>
+        <link rel="alternate" type="application/rss+xml" title="r4r00t blog" href="/feed.xml" />
+      </head>
       <body className="min-h-full bg-background font-mono text-foreground">
         <script
           dangerouslySetInnerHTML={{

@@ -1,3 +1,5 @@
+export type Difficulty = "Beginner" | "Intermediate" | "Advanced";
+
 export type PostMeta = {
   slug: string;
   title: string;
@@ -5,6 +7,9 @@ export type PostMeta = {
   author: string;
   topic: string;
   summary: string;
+  difficulty?: Difficulty;
+  series?: string;
+  seriesPart?: number;
 };
 
 export function formatDate(date: string): string {
