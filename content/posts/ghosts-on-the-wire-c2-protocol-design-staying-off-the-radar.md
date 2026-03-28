@@ -1,6 +1,6 @@
 ---
 title: "Ghosts on the Wire: C2 Protocol Design and Staying Off the Radar"
-date: "2026-03-21"
+date: "2026-03-28"
 author: "r4r00t"
 topic: "Malware Research"
 summary: "How C2 protocols work, what gets operators burned, and how to think about traffic design from first principles — beaconing, DNS, DGA, domain fronting, TLS fingerprinting, and what defenders are actually watching."
